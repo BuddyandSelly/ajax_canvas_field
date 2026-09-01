@@ -1,0 +1,53 @@
+# RuboCop replaces its default AllCops/Exclude with the one below instead of
+# adding to it, and CI installs the bundle into vendor/bundle, where a gem with
+# a .rubocop.yml of its own would be picked up.
+inherit_mode:
+  merge:
+    - Exclude
+
+AllCops:
+  TargetRubyVersion: 3.2
+  NewCops: enable
+  SuggestExtensions: false
+  Exclude:
+    - 'src/**/*'
+
+# Development dependencies are declared in the gemspec, next to the runtime ones.
+Gemspec/DevelopmentDependencies:
+  EnforcedStyle: gemspec
+
+# The engine and the version live inside AjaxCanvasField::Rails, so ::Rails is
+# not redundant anywhere in this gem, and the specs spell it out for the same
+# reason.
+Style/RedundantConstantBase:
+  Enabled: false
+
+# The gem is not published from this repository, see the gemspec.
+Gemspec/RequireMFA:
+  Enabled: false
+
+Layout/LineLength:
+  Max: 120
+
+# The view helpers assemble a data hash out of a dozen options each.
+Metrics/AbcSize:
+  Max: 25
+Metrics/CyclomaticComplexity:
+  Max: 15
+Metrics/MethodLength:
+  Max: 15
+Metrics/PerceivedComplexity:
+  Max: 15
+
+# canvas_data_field(active) is the documented signature of the helper.
+Style/OptionalBooleanParameter:
+  Exclude:
+    - 'app/helpers/canvas_field_helper.rb'
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*.rb'
+    - '*.gemspec'
+
+Style/Documentation:
+  Enabled: false
