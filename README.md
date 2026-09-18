@@ -1,4 +1,5 @@
 # AjaxCanvasField
+[![CI](https://github.com/BuddyandSelly/ajax_canvas_field/actions/workflows/ci.yml/badge.svg)](https://github.com/BuddyandSelly/ajax_canvas_field/actions/workflows/ci.yml)
 
 
 ## Installation
@@ -85,6 +86,28 @@ Provides readonly canvas_fields with class: .canvas_field, for showing the resul
 # options
 :background_url # File-Path for background image
 ```
+
+## Development
+
+The gem is developed and tested against the Ruby version in
+[.ruby-version](.ruby-version) and supports Ruby >= 3.2 with Rails >= 7.0.
+
+```bash
+bundle install
+bundle exec rspec    # specs, including the coverage check
+bundle exec rubocop  # style
+bundle exec rake     # both of the above
+```
+
+The specs boot a minimal Rails application (`spec/support/rails_app.rb`), because the helpers are
+view helpers of an engine: the engine adds the asset paths of the gem in an initializer, and
+`canvas_legend_field` renders a haml partial out of `app/views`. They are measured with
+[SimpleCov](https://github.com/simplecov-ruby/simplecov): line and branch coverage of everything in
+`app/` and `lib/` have to stay at 100%, and the suite fails otherwise. The HTML report is written to
+`coverage/index.html`, and CI comments both percentages on every pull request.
+
+The one place a spec cannot reach - the engine skipping the asset paths when the application has no
+sprockets - carries a `# simplecov:disable` comment naming the reason.
 
 ## Contributing
 

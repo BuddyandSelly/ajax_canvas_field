@@ -21,15 +21,12 @@ module AjaxCanvasField
 
   # Configure through yaml file
   def self.configure_with(path_to_yaml_file)
-    begin
-      config = YAML.load(IO.read(path_to_yaml_file))
-    rescue Errno::ENOENT
-      log(:warning, "YAML configuration file couldn't be found. Using defaults."); return
-    rescue Psych::SyntaxError
-      log(:warning, 'YAML configuration file contains invalid syntax. Using defaults.'); return
-    end
-
+    config = YAML.load_file(path_to_yaml_file)
     configure(config)
+  rescue Errno::ENOENT
+    warn "AjaxCanvasField: YAML configuration file couldn't be found. Using defaults."
+  rescue Psych::SyntaxError
+    warn 'AjaxCanvasField: YAML configuration file contains invalid syntax. Using defaults.'
   end
 
   def self.config

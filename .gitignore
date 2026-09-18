@@ -1,1 +1,8 @@
 node_modules/
+
+/.bundle/
+/Gemfile.lock
+/coverage/
+/pkg/
+tmp/
+.rspec_status

@@ -2,10 +2,10 @@
 
 module CanvasFieldHelper
   def canvas_field(options = {})
-    url = options[:server].to_s + '/'
-    url += options[:namespace].to_s + '/' if options[:namespace]
+    url = "#{options[:server]}/"
+    url += "#{options[:namespace]}/" if options[:namespace]
     url += options[:controller] || 'canvas_fields'
-    url = url.gsub('//', '/')
+    url = url.gsub(%r{(?<!:)//+}, '/')
 
     background_url = options[:background_url].blank? ? '' : "url(#{options[:background_url]})"
     background = "background: #fff #{background_url} no-repeat center top"
@@ -23,12 +23,12 @@ module CanvasFieldHelper
   end
 
   def canvas_legend_field(options = {})
-    locals = { no_icon: (options[:no_icon] || false), no_header: (options[:no_header] || false) }
+    locals = { no_icon: options[:no_icon] || false, no_header: options[:no_header] || false }
     %w[left middle right].each do |side|
-      locals["#{side}_text".to_sym] = options["#{side}_text"] || ''
-      locals["#{side}_initial".to_sym] = options["#{side}_initial"] || ''
-      locals["#{side}_color".to_sym] = options["#{side}_color"] || '#ff0000'
-      locals["#{side}_active".to_sym] = options["#{side}_active"] || false
+      locals[:"#{side}_text"] = options[:"#{side}_text"] || ''
+      locals[:"#{side}_initial"] = options[:"#{side}_initial"] || ''
+      locals[:"#{side}_color"] = options[:"#{side}_color"] || '#ff0000'
+      locals[:"#{side}_active"] = options[:"#{side}_active"] || false
     end
     render partial: 'ajax_canvas_field/canvas_legend', locals: locals
   end
