@@ -6,4 +6,3 @@ node_modules/
 /pkg/
 tmp/
 .rspec_status
-config.bat
